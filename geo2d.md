@@ -6,7 +6,7 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.13.8
+      jupytext_version: 1.14.0
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -37,13 +37,13 @@ operations = ";".join([
 ])
 l2product = harp.import_product('S5P_OFFL_L2__SO2____20210412T151823_20210412T165953_18121_01_020104_20210414T175908.nc', operations)
 
-avl.Geo(l2product, varname, colorrange=(1, 10))
+avl.Geo(l2product, varname, colorrange=(1, 8), colormap="batlow", opacity=0.9)
 ```
 
 ```python
 l3product = harp.import_product('o3col2002091612.hdf')
 
-avl.Geo(l3product, 'O3_column_number_density')
+avl.Geo(l3product, 'O3_column_number_density', colorrange=(100,500), colormap="jet", opacity=0.7)
 ```
 
 ```python
