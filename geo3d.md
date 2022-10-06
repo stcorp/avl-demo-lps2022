@@ -6,7 +6,7 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.13.8
+      jupytext_version: 1.14.0
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -28,7 +28,7 @@ result = avl.download("201601-ESACCI-L3C_CLOUD-CLD_PRODUCTS-AVHRR_NOAA-19-fv3.0.
 
 ```python
 product = harp.import_product('201601-ESACCI-L3C_CLOUD-CLD_PRODUCTS-AVHRR_NOAA-19-fv3.0.nc')
-avl.Geo3D(product, 'cloud_top_pressure', showcolorbar=False)
+avl.Geo3D(product, 'cloud_top_pressure', colormap="jet", showcolorbar=True)
 ```
 
 3d swath
@@ -42,14 +42,15 @@ result = api.download_all(api.query(filename=filename))
 ```python
 filter = 'tropospheric_NO2_column_number_density_validity>75;keep(datetime*,latitude*,longitude*,tropospheric_NO2_column_number_density)'
 product = harp.import_product('S5P_OFFL_L2__NO2____20200123T004109_20200123T022240_11799_01_010302_20200126T123552.nc', filter)
-avl.Geo3D(product, 'tropospheric_NO2_column_number_density', colorrange=(0, 1.7e-5), centerlon=180, zoom=10)
+plot = avl.Geo3D(product, 'tropospheric_NO2_column_number_density', colorrange=(0, 1.7e-5), colormap="jet", centerlon=180, zoom=10)
+plot
 ```
 
 3d points
 
 ```python
 product = harp.import_product('S5P_OFFL_L2__NO2____20200123T004109_20200123T022240_11799_01_010302_20200126T123552.nc', 'keep(longitude,latitude, tropospheric_NO2_column_number_density)')
-avl.Geo3D(product, 'tropospheric_NO2_column_number_density', colorrange=(0, 1.7e-5), size=(1024,768), centerlon=180, pointsize=2)
+avl.Geo3D(product, 'tropospheric_NO2_column_number_density', colorrange=(0, 1.7e-5), colormap="jet", size=(1024,768), centerlon=180, pointsize=2)
 ```
 
 multiple layers
@@ -61,9 +62,9 @@ filter = 'tropospheric_NO2_column_number_density_validity>75;keep(datetime*,lati
 producta = harp.import_product('S5P_OFFL_L2__NO2____20200123T004109_20200123T022240_11799_01_010302_20200126T123552.nc', filter)
 productb = harp.import_product('S5P_OFFL_L2__NO2____20200123T022240_20200123T040410_11800_01_010302_20200126T123433.nc', filter)
 
-plot = vis.MapPlot3D(centerlon=180, zoom=5, colorrange=(0,1.7e-5))
-plot.add(avl.Geo3D(producta, 'tropospheric_NO2_column_number_density'))
-plot.add(avl.Geo3D(productb, 'tropospheric_NO2_column_number_density'))
+plot = vis.MapPlot3D(centerlon=180, zoom=5)
+plot.add(avl.Geo3D(producta, 'tropospheric_NO2_column_number_density', colorrange=(0,1.7e-5), colormap="jet"))
+plot.add(avl.Geo3D(productb, 'tropospheric_NO2_column_number_density', colorrange=(0,1.7e-5), colormap="jet"))
 plot
 ```
 
